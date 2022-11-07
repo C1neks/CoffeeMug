@@ -1,15 +1,13 @@
-import { Document } from "mongoose";
+import { HydratedDocument } from "mongoose";
 
 export interface IProduct {
   name: string;
   price: number;
 }
 
-export interface IProductDB extends Document, IProduct {}
-
 export interface IProductRepository {
-  getItems(): Promise<IProductDB[]>;
-  createItem(item: any): Promise<IProductDB>;
+  getItems(): Promise<HydratedDocument<IProduct>[]>;
+  createItem(item: any): Promise<HydratedDocument<IProduct>>;
 }
 
 export interface IProductService {

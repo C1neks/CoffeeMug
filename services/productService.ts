@@ -8,11 +8,22 @@ export class ProductService {
   @inject(TYPES.ProductRepository) private repository!: IProductRepository;
 
   async getProducts() {
-    return this.repository.getItems();
+    const itemsFromDB = await this.repository.getItems();
+    return itemsFromDB.map((item) => {
+      return {
+        id: item._id,
+        name: item.name,
+        price: item.price,
+      };
+    });
   }
 
   async createProduct(product: IProduct) {
-    const createdProduct = await this.repository.createItem(product);
-    return createdProduct;
+    const createdProductFromDB = await this.repository.createItem(product);
+    return {
+      id: createdProductFromDB._id,
+      name: createdProductFromDB.name,
+      price: createdProductFromDB.price,
+    };
   }
 }
