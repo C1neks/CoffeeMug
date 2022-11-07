@@ -1,8 +1,8 @@
 import "reflect-metadata";
-import fastify from "fastify";
+import fastify, { FastifyInstance } from "fastify";
 import mongoose from "mongoose";
 import productRoutes from "./routes/products";
-const server = fastify();
+const server: FastifyInstance = fastify({ logger: true });
 
 server.get("/", async (request, reply) => {
   return "Hello World";

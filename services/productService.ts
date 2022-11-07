@@ -18,6 +18,17 @@ export class ProductService {
     });
   }
 
+  async getProductById(id: string) {
+    const productFromDB = await this.repository.getItemById(id);
+    if (productFromDB) {
+      return {
+        id: productFromDB._id,
+        name: productFromDB.name,
+        price: productFromDB.price,
+      };
+    }
+  }
+
   async createProduct(product: IProduct) {
     const createdProductFromDB = await this.repository.createItem(product);
     return {
@@ -25,5 +36,10 @@ export class ProductService {
       name: createdProductFromDB.name,
       price: createdProductFromDB.price,
     };
+  }
+
+  async deleteProduct(id: string) {
+    const deletedProduct = await this.repository.deleteItem(id);
+    return deletedProduct;
   }
 }

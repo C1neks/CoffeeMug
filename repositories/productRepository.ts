@@ -17,9 +17,17 @@ export class ProductRepository implements IProductRepository {
     return res;
   }
 
-  async createItem(item: any) {
+  async getItemById(id: any) {
+    return this.product.findById(id);
+  }
+
+  async createItem(item: string) {
     const newItem = new this.product(item);
 
     return newItem.save();
+  }
+
+  async deleteItem(id: string) {
+    return this.product.findOneAndDelete({ _id: id });
   }
 }
