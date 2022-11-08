@@ -2,44 +2,36 @@ import { inject, injectable } from "inversify";
 
 import { TYPES } from "../types";
 import { IProduct, IProductRepository } from "../interfaces";
+import { productDTO } from "../utils/productDTO";
 
 @injectable()
 export class ProductService {
   @inject(TYPES.ProductRepository) private repository!: IProductRepository;
-
+  //TODO Function product DTO
   async getProducts() {
     const itemsFromDB = await this.repository.getItems();
-    return itemsFromDB.map((item) => {
-      return {
-        id: item._id,
-        name: item.name,
-        price: item.price,
-      };
-    });
+    const result = await productDTO(itemsFromDB);
+    return result;
   }
 
   async getProductById(id: string) {
     const productFromDB = await this.repository.getItemById(id);
     if (productFromDB) {
-      return {
-        id: productFromDB._id,
-        name: productFromDB.name,
-        price: productFromDB.price,
-      };
+      return productDTO(productFromDB);
     }
   }
 
   async createProduct(product: IProduct) {
-    const createdProductFromDB = await this.repository.createItem(product);
-    return {
-      id: createdProductFromDB._id,
-      name: createdProductFromDB.name,
-      price: createdProductFromDB.price,
-    };
+    const productFromDB = await this.repository.createItem(product);
+
+    return productDTO(productFromDB);
   }
 
   async deleteProduct(id: string) {
-    const deletedProduct = await this.repository.deleteItem(id);
-    return deletedProduct;
+    const productFromDB = await this.repository.deleteItem(id);
+
+    if (productFromDB) {
+      return productDTO(productFromDB);
+    }
   }
 }

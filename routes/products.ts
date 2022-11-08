@@ -16,16 +16,16 @@ async function productRoutes(fastify: {
 
   fastify.get("/products/:id", async (request, reply) => {
     const id = request.params.id;
-
-    try {
+    //TODO walidacja id
+    if (id) {
       const response = await productService.getProductById(id);
       if (response) {
         reply.send(response);
       } else {
         reply.status(404).send("Cannot find product");
       }
-    } catch {
-      reply.status(500).send("Internal Server Error");
+    } else {
+      reply.status(400).send("ID not provided");
     }
   });
 
@@ -39,7 +39,11 @@ async function productRoutes(fastify: {
   fastify.delete("/products/:id", async (request, reply) => {
     const id = request.params.id;
     const response = await productService.deleteProduct(id);
-    reply.send(response);
+    if (response) {
+      reply.send(response);
+    } else {
+      reply.status(404).send("Cannot find product to delete");
+    }
   });
 }
 
