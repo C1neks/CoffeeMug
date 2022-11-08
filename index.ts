@@ -1,6 +1,8 @@
 import "reflect-metadata";
 import fastify, { FastifyInstance } from "fastify";
 import mongoose from "mongoose";
+import "dotenv/config";
+
 import productRoutes from "./routes/products";
 const server: FastifyInstance = fastify({ logger: true });
 
@@ -12,9 +14,7 @@ server.register(productRoutes);
 
 const connectionToDB = async () => {
   await mongoose
-    .connect(
-      "mongodb+srv://c1neks:gB73a5PVYg08nw4l@cluster0.igcacbe.mongodb.net/?retryWrites=true&w=majority"
-    )
+    .connect(process.env.MONGODB_URL!)
     .catch((error) => console.log(error.message));
 };
 

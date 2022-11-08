@@ -11,6 +11,7 @@ export const productDTO: productDTO = async (resource) => {
         id: item._id,
         name: item.name,
         price: item.price,
+        updateDate: item.updatedAt,
       };
     });
   } else {
@@ -18,6 +19,7 @@ export const productDTO: productDTO = async (resource) => {
       id: resource._id,
       name: resource.name,
       price: resource.price,
+      updateDate: resource.updatedAt,
     };
   }
 };

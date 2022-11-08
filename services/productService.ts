@@ -34,4 +34,11 @@ export class ProductService {
       return productDTO(productFromDB);
     }
   }
+
+  async updateProduct(id: string, body: IProduct) {
+    const productFromDB = await this.repository.updateItem(id, body);
+    if (productFromDB) {
+      return productDTO(productFromDB);
+    }
+  }
 }

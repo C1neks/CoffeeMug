@@ -30,4 +30,14 @@ export class ProductRepository implements IProductRepository {
   async deleteItem(id: string) {
     return this.product.findOneAndDelete({ _id: id });
   }
+
+  async updateItem(id: string, body: IProduct) {
+    return this.product.findOneAndUpdate(
+      { _id: id },
+      { ...{ $set: body } },
+      {
+        new: true,
+      }
+    );
+  }
 }

@@ -8,6 +8,7 @@ async function productRoutes(fastify: {
   get(s: string, param2: (request: any, reply: any) => Promise<void>): void;
   post(s: string, param2: (request: any, reply: any) => Promise<void>): void;
   delete(s: string, param2: (request: any, reply: any) => Promise<void>): void;
+  put(s: string, param2: (request: any, reply: any) => Promise<void>): void;
 }) {
   fastify.get("/products", async (request, reply) => {
     const response = await productService.getProducts();
@@ -43,6 +44,21 @@ async function productRoutes(fastify: {
       reply.send(response);
     } else {
       reply.status(404).send("Cannot find product to delete");
+    }
+  });
+
+  fastify.put("/products/:id", async (request, reply) => {
+    const id = request.params.id;
+    const body = request.body;
+    if (id) {
+      const response = await productService.updateProduct(id, body);
+      if (response) {
+        reply.send(response);
+      } else {
+        reply.status(404).send("Cannot find product");
+      }
+    } else {
+      reply.status(400).send("ID not provided");
     }
   });
 }
