@@ -16,7 +16,7 @@ async function productRoutes(fastify: {
 
   fastify.get("/products/:id", async (request, reply) => {
     const id = request.params.id;
-    //TODO walidacja id
+
     if (id) {
       const response = await productService.getProductById(id);
       if (response) {

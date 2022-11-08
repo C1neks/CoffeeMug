@@ -7,7 +7,7 @@ import { productDTO } from "../utils/productDTO";
 @injectable()
 export class ProductService {
   @inject(TYPES.ProductRepository) private repository!: IProductRepository;
-  //TODO Function product DTO
+
   async getProducts() {
     const itemsFromDB = await this.repository.getItems();
     const result = await productDTO(itemsFromDB);
