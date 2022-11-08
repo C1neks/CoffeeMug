@@ -1,29 +1,33 @@
 import { injectable } from "inversify";
+import { HydratedDocument } from "mongoose";
+import { IProduct, IProductRepository } from "../interfaces";
 
-import { Model, model, Schema } from "mongoose";
-import { IProduct, IProductDB, IProductRepository } from "../interfaces";
+import ProductModel from "../models/productModel";
 
 @injectable()
 export class ProductRepository implements IProductRepository {
-  private model: Model<IProduct>;
+  private product: typeof ProductModel;
   constructor() {
-    const productSchema = new Schema<IProduct>({
-      name: { type: String, required: true, unique: true },
-      price: { type: Number, required: true },
-    });
-
-    this.model = model("Product", productSchema);
+    this.product = ProductModel;
   }
 
   async getItems() {
-    const res: IProductDB[] = await this.model.find();
+    const res: HydratedDocument<IProduct>[] = await this.product.find();
 
     return res;
   }
 
-  async createItem(item: any) {
-    const newItem = new this.model(item);
+  async getItemById(id: any) {
+    return this.product.findById(id);
+  }
+
+  async createItem(item: string) {
+    const newItem = new this.product(item);
 
     return newItem.save();
+  }
+
+  async deleteItem(id: string) {
+    return this.product.findOneAndDelete({ _id: id });
   }
 }

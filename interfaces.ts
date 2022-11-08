@@ -1,18 +1,21 @@
-import { Document } from "mongoose";
+import { HydratedDocument } from "mongoose";
 
 export interface IProduct {
+  _id?: string;
   name: string;
   price: number;
 }
 
-export interface IProductDB extends Document, IProduct {}
-
 export interface IProductRepository {
-  getItems(): Promise<IProductDB[]>;
-  createItem(item: any): Promise<IProductDB>;
+  getItems(): Promise<HydratedDocument<IProduct>[]>;
+  getItemById(id: string): Promise<HydratedDocument<IProduct> | null>;
+  createItem(item: any): Promise<HydratedDocument<IProduct>>;
+  deleteItem(id: string): Promise<HydratedDocument<IProduct> | null>;
 }
 
 export interface IProductService {
   getProducts(): Promise<IProduct[]>;
+  getProductById(id: any): Promise<IProduct>;
   createProduct(product: IProduct): Promise<IProduct>;
+  deleteProduct(id: string): Promise<IProduct>;
 }
