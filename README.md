@@ -4,7 +4,7 @@ REST API created in Node.js technology using the Fastify framework.
 ## Connection to Database
 Create .env file and paste connection url.\
 Example file:
-### `.env.example`
+### [.env.example](https://github.com/C1neks/CoffeeMug/blob/Adds-tests/.env.example)
 
 ## Available Scripts
 
