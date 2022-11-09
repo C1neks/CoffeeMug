@@ -1,6 +1,6 @@
 import { DIContainer } from "../inversify.config";
 import { TYPES } from "../types";
-import { IProduct, IProductService } from "../interfaces";
+import { IProductService } from "../interfaces";
 
 const productService = DIContainer.get<IProductService>(TYPES.ProductService);
 
