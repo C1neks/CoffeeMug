@@ -17,7 +17,7 @@ export class ProductRepository implements IProductRepository {
     return res;
   }
 
-  async getItemById(id: any) {
+  async getItemById(id: string) {
     return this.product.findById(id);
   }
 
@@ -34,7 +34,7 @@ export class ProductRepository implements IProductRepository {
   async updateItem(id: string, body: IProduct) {
     return this.product.findOneAndUpdate(
       { _id: id },
-      { ...{ $set: body } },
+      { $set: body },
       {
         new: true,
       }
