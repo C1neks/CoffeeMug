@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "types": ["reflect-metadata"],
+    "types": ["reflect-metadata","jest"],
     "experimentalDecorators": true,
     /* Visit https://aka.ms/tsconfig to read more about this file */
 

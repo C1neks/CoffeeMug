@@ -1,6 +1,6 @@
 import { DIContainer } from "../inversify.config";
 import { TYPES } from "../types";
-import { IProductService } from "../interfaces";
+import { IProductService } from "../interfaces/interfaces";
 
 const productService = DIContainer.get<IProductService>(TYPES.ProductService);
 
@@ -17,16 +17,13 @@ async function productRoutes(fastify: {
 
   fastify.get("/products/:id", async (request, reply) => {
     const id = request.params.id;
+    if (!id) return reply.status(400).send("ID not provided");
 
-    if (id) {
-      const response = await productService.getProductById(id);
-      if (response) {
-        reply.send(response);
-      } else {
-        reply.status(404).send("Cannot find product");
-      }
+    const response = await productService.getProductById(id);
+    if (response) {
+      reply.send(response);
     } else {
-      reply.status(400).send("ID not provided");
+      reply.status(404).send("Cannot find product");
     }
   });
 

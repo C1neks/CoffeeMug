@@ -1,23 +1,20 @@
-import { injectable } from "inversify";
-import { HydratedDocument } from "mongoose";
-import { IProduct, IProductRepository } from "../interfaces";
+import { inject, injectable } from "inversify";
+import { IProduct, IProductRepository } from "../interfaces/interfaces";
 
-import ProductModel from "../models/productModel";
+import { TYPES } from "../types";
+import Product from "../models/productModel";
 
 @injectable()
 export class ProductRepository implements IProductRepository {
-  private product: typeof ProductModel;
-  constructor() {
-    this.product = ProductModel;
-  }
+  @inject(TYPES.Product) private product!: typeof Product;
 
   async getItems() {
-    const res: HydratedDocument<IProduct>[] = await this.product.find();
+    const res = await this.product.find();
 
     return res;
   }
 
-  async getItemById(id: any) {
+  async getItemById(id: string) {
     return this.product.findById(id);
   }
 
@@ -34,7 +31,7 @@ export class ProductRepository implements IProductRepository {
   async updateItem(id: string, body: IProduct) {
     return this.product.findOneAndUpdate(
       { _id: id },
-      { ...{ $set: body } },
+      { $set: body },
       {
         new: true,
       }

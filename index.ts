@@ -7,7 +7,7 @@ import productRoutes from "./routes/products";
 const server: FastifyInstance = fastify({ logger: true });
 
 server.get("/", async (request, reply) => {
-  return "Hello World";
+  return "Main Page";
 });
 
 server.register(productRoutes);
