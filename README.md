@@ -3,7 +3,7 @@ REST API created in Node.js using the Fastify framework.
 ### Connection to Database
 Create .env file and paste connection url.\
 Example file:
-### [.env.example](https://github.com/C1neks/CoffeeMug/blob/Adds-tests/.env.example)
+### [.env.example](https://github.com/C1neks/CoffeeMug/blob/master/.env.example)
 
 ### Start the API server
 
