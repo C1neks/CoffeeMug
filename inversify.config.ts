@@ -10,7 +10,6 @@ import Product from "./models/productModel";
 const DIContainer = new Container();
 
 DIContainer.bind<any>(TYPES.Product).toConstantValue(Product);
-
 DIContainer.bind<IProductRepository>(TYPES.ProductRepository).to(
   ProductRepository
 );
