@@ -1,7 +1,7 @@
 name: Run-test-on-push
 on: [push]
 jobs:
-  cdk-deploy:
+  run-tests:
     if: github.ref == 'refs/heads/CI'
     runs-on: ubuntu-latest
     steps:
