@@ -45,7 +45,7 @@ describe("tests fromProductDbToProductDto function", () => {
     );
     expect(result).toEqual([
       {
-        id: "407f1f27bcf66cd799439087",
+        id: "407f1f27bcf66cd799439086",
         name: "testProductName",
         price: 15,
       },
