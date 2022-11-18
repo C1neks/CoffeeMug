@@ -10,14 +10,14 @@ const correctTestData: Partial<IProduct> = {
   name: "testname",
 };
 
-describe("tests fromProductDbToProductDto function", () => {
+describe("tests bodyValidation function", () => {
   it("should return false", async () => {
     const result = await bodyValidation(wrongTestData as IProduct);
 
     expect(result).toEqual(false);
   });
 
-  it("should return false", async () => {
+  it("should return true", async () => {
     const result = await bodyValidation(correctTestData as IProduct);
 
     expect(result).toEqual(true);
