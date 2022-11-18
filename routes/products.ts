@@ -2,6 +2,7 @@ import { DIContainer } from "../inversify.config";
 import { TYPES } from "../types";
 import { IProduct, IProductService } from "../interfaces/interfaces";
 import { FastifyInstance, FastifyReply } from "fastify";
+import { bodyValidation } from "../utils/bodyValidation";
 
 const productService = DIContainer.get<IProductService>(TYPES.ProductService);
 
@@ -33,9 +34,13 @@ async function productRoutes(fastify: FastifyInstance) {
     Body: { name: string; price: number };
   }>("/products", async (request, reply) => {
     const { name, price } = request.body;
-
-    const response = await productService.createProduct({ name, price });
-    successOrFail(response, reply);
+    const validation = await bodyValidation({ name, price });
+    console.log(validation);
+    if (validation) {
+      const response = await productService.createProduct({ name, price });
+      successOrFail(response, reply);
+    }
+    reply.status(400).send("Validation Error");
   });
 
   fastify.delete<{
@@ -54,8 +59,12 @@ async function productRoutes(fastify: FastifyInstance) {
     if (!id) return reply.status(400).send("ID not provided");
 
     const body = request.body;
-    const response = await productService.updateProduct(id, body);
-    successOrFail(response, reply);
+    const validation = await bodyValidation(body);
+    if (validation) {
+      const response = await productService.updateProduct(id, body);
+      successOrFail(response, reply);
+    }
+    reply.status(400).send("Validation Error");
   });
 }
 

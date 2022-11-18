@@ -29,7 +29,7 @@ export class ProductRepository implements IProductRepository {
   }
 
   async updateItem(id: string, body: IProduct) {
-    await this.product.validate(body) // validate manually because findOneAndUpdate doesn't do validation
+    // await this.product.validate(body) // validate manually because findOneAndUpdate doesn't do validation
     return this.product.findOneAndUpdate(
       { _id: id },
       { $set: body },
